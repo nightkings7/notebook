@@ -15,6 +15,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    android.applicationVariants.all{ variant ->
+        variant.outputs.all {
+            outputFileName = "notebook_v${versionName}.apk"
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
