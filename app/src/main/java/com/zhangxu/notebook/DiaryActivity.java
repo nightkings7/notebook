@@ -46,7 +46,7 @@ public class DiaryActivity extends AppCompatActivity {
         mydiaryEditText=findViewById(R.id.edit_mydiary);
         saveButton=findViewById(R.id.btn_save);
         SharedPreferences pref_text=getSharedPreferences("diary_text", Context.MODE_PRIVATE);
-        String diary_txt=pref_text.getString("DLARY","");
+        String diary_txt=pref_text.getString("DIARY","");
         Time time=new Time("GMT+8");
         time.setToNow();
         diary_txt=diary_txt+"\r\n"+time.year+"年-"+(time.month+1)+"月-"+time.monthDay+"日\n";
