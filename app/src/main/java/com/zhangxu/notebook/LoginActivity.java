@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         progressBar=findViewById(R.id.progressbar);
 
         SharedPreferences pref=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
-        Boolean rem=pref.getBoolean("REMBERPWD",false);
+        boolean rem=pref.getBoolean("REMBERPWD",false);
         if (rem) {
             pwdEdit.setText(pref.getString("PWD",""));
             usernameEdit.setText(pref.getString("USERNAME",""));
