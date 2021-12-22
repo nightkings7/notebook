@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
 
             new Thread(() -> {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                     Message msg=new Message();
                     msg.what=MSG_JUMP;
                     handler.sendMessage(msg);
