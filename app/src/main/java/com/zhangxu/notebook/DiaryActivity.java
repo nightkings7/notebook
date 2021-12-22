@@ -15,7 +15,6 @@ public class DiaryActivity extends AppCompatActivity {
 
     EditText mydiaryEditText;
     Button saveButton;
-    private final long INTERVAL=2000;
     private long lastBackKeyTime=-1;
 
     @Override
@@ -33,7 +32,8 @@ public class DiaryActivity extends AppCompatActivity {
             lastBackKeyTime = timenow;
             Toast.makeText(DiaryActivity.this, "再按一下【返回】键，退出‘我的日记’", Toast.LENGTH_SHORT).show();
         } else {
-            if ((timenow-lastBackKeyTime)<=INTERVAL) {
+            long INTERVAL = 2000;
+            if ((timenow-lastBackKeyTime)<= INTERVAL) {
                 finish();
             } else {
                 lastBackKeyTime=timenow;
@@ -54,15 +54,12 @@ public class DiaryActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences pref_text=getSharedPreferences("diary_text",Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor=pref_text.edit();
-                editor.putString("DIARY",mydiaryEditText.getText().toString());
-                editor.commit();
-                Toast.makeText(DiaryActivity.this,"保存成功",Toast.LENGTH_LONG).show();
-            }
+        saveButton.setOnClickListener(view -> {
+            SharedPreferences pref_text=getSharedPreferences("diary_text",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=pref_text.edit();
+            editor.putString("DIARY",mydiaryEditText.getText().toString());
+            editor.apply();
+            Toast.makeText(DiaryActivity.this,"保存成功",Toast.LENGTH_LONG).show();
         });
     }
 
