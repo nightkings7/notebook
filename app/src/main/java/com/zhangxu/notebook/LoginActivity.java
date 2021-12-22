@@ -70,24 +70,21 @@ public class LoginActivity extends AppCompatActivity {
                 editor.putString("USERNAME","");
                 editor.putString("PWD","");
             }
-            editor.commit();
+            editor.apply();
 
             usernameEdit.setEnabled(false);
             pwdEdit.setEnabled(false);
             loginBtn.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
 
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        Thread.sleep(3000);
-                        Message msg=new Message();
-                        msg.what=MSG_JUMP;
-                        handler.sendMessage(msg);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+            new Thread(() -> {
+                try {
+                    Thread.sleep(3000);
+                    Message msg=new Message();
+                    msg.what=MSG_JUMP;
+                    handler.sendMessage(msg);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }).start();
         } else {
