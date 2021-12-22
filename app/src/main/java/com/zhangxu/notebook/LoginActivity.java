@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
 
         SharedPreferences pref=getSharedPreferences("userinfo", Context.MODE_PRIVATE);
         Boolean rem=pref.getBoolean("REMBERPWD",false);
-        if (rem==true) {
+        if (rem) {
             pwdEdit.setText(pref.getString("PWD",""));
             usernameEdit.setText(pref.getString("USERNAME",""));
             rememberPwdCheck.setChecked(true);
@@ -51,50 +51,48 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void setListeners() {
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String  username=usernameEdit.getText().toString();
-                String pwd=pwdEdit.getText().toString();
-                if (username.equals("admin")&&pwd.equals("123456")){
-                    SharedPreferences pref=getSharedPreferences("userinfo",Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor=pref.edit();
+        loginBtn.setOnClickListener(view -> setListenersdo());
+    }
 
-                    if (rememberPwdCheck.isChecked()) {
-                        editor.putBoolean("REMBERPWD",true);
-                        editor.putString("USERNAME",username);
-                        editor.putString("PWD",pwd);
-                        editor.commit();
-                    } else {
-                        editor.putBoolean("REMBERPWD",false);
-                        editor.putString("USERNAME","");
-                        editor.putString("PWD","");
-                        editor.commit();
-                    }
+    void setListenersdo() {
+        String  username=usernameEdit.getText().toString();
+        String pwd=pwdEdit.getText().toString();
+        if (username.equals("admin")&&pwd.equals("123456")){
+            SharedPreferences pref=getSharedPreferences("userinfo",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor=pref.edit();
 
-                    usernameEdit.setEnabled(false);
-                    pwdEdit.setEnabled(false);
-                    loginBtn.setEnabled(false);
-                    progressBar.setVisibility(View.VISIBLE);
-
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(3000);
-                                Message msg=new Message();
-                                msg.what=MSG_JUMP;
-                                handler.sendMessage(msg);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }).start();
-                } else {
-                    Toast.makeText(LoginActivity.this,"用户名或密码不正确",Toast.LENGTH_SHORT).show();
-                }
+            if (rememberPwdCheck.isChecked()) {
+                editor.putBoolean("REMBERPWD",true);
+                editor.putString("USERNAME",username);
+                editor.putString("PWD",pwd);
+            } else {
+                editor.putBoolean("REMBERPWD",false);
+                editor.putString("USERNAME","");
+                editor.putString("PWD","");
             }
-        });
+            editor.commit();
+
+            usernameEdit.setEnabled(false);
+            pwdEdit.setEnabled(false);
+            loginBtn.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        Thread.sleep(3000);
+                        Message msg=new Message();
+                        msg.what=MSG_JUMP;
+                        handler.sendMessage(msg);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } else {
+            Toast.makeText(LoginActivity.this,"用户名或密码不正确",Toast.LENGTH_SHORT).show();
+        }
     }
 
     void initHandler() {
